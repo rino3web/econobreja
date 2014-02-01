@@ -1,0 +1,109 @@
+<!-- EconoBreja | RINO3 (http://rino3.com.br) | Copyright 2014 sob a licença MIT -->
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>EconoBreja - Beba mais pagando menos</title>
+        <meta name="Description" content="Aplicativo para economizar na hora de comprar cerveja. Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar e o EconoBreja vai te dizer qual a melhor opção." />
+        <meta name="robots" content="index,follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/screen.css">
+    </head>
+    <body>
+
+        <!-- First Page -->
+        <section data-role="page" id="intro" class="ui-breja breja-bg">
+            <div role="main" class="ui-content">
+
+                <span class="logo-app"></span>
+
+                <div class="content-info">
+                    <p class="intro-info">Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar, e o EconoBreja vai te dizer qual a melhor opção.</p>
+                </div>
+
+                <a href="#calc" class="breja-btn btn-red">Iniciar</a>
+            </div>
+
+        </section>
+
+
+        <!-- Second Page -->
+        <section data-role="page" id="calc">
+            <header data-role="header" data-position="fixed">
+
+                <a href="#intro" class="btn-header-left">
+                    <span class="arrow-back"></span>
+                </a>
+
+                <h1><span class="logo-app-mini"></span></h1>
+            </header>
+
+            <div role="main" class="ui-content">
+                <div class="row-form-price ui-field-contain">
+                    <label for="b1">Geladinha <small>269 ml</small></label>
+                    <input id="b1" data-name="Geladinha" data-behaviour="money" data-ml="269" value="0,00" data-mini="true" type="number" maxlength="6">
+                </div>
+
+                <div class="row-form-price ui-field-contain">
+                    <label for="b2">Lata <small>350 ml</small></label>
+                    <input  data-name="Lata" data-behaviour="money" id="b2" data-ml="350" value="0,00" data-mini="true" type="number" maxlength="6" >
+                </div>
+
+                <div class="row-form-price ui-field-contain">
+                    <label for="b3">long neck <small>355 ml</small></label>
+                    <input  id="b3" data-name="long neck" data-behaviour="money" data-ml="355" value="0,00" data-mini="true" type="number" maxlength="6" >
+                </div>
+
+                <div class="row-form-price ui-field-contain">
+                    <label for="b4">Latão <small>473 ml</small></label>
+                    <input  data-name="Latão" data-behaviour="money" id="b4" data-ml="473" value="0,00" data-mini="true" type="number" maxlength="6" >
+                </div>
+
+                <div class="row-form-price ui-field-contain">
+                    <label for="b5">Garrafa <small>600 ml</small></label>
+                    <input  data-name="Garrafa" data-behaviour="money" data-ml="600" id="b5" value="0,00" data-mini="true" type="number" maxlength="6" >
+                </div>
+
+                <div class="row-form-price ui-field-contain">
+                    <label for="b6">Litrão <small>1000 ml</small></label>
+                    <input data-name="Litrão" data-behaviour="money" data-ml="1000" id="b6" value="0,00" data-mini="true" type="number" >
+                </div>
+            </div>
+
+            <footer data-role="footer" data-position="fixed">
+                <a id="bt-calc" href="#calc" class="breja-btn-big btn-yellow inactive">Calcular</a>
+            </footer>
+
+        </section>
+
+
+
+        <!-- Third Page -->
+        <section data-role="page" id="result" class="ui-breja breja-bg">
+            <header data-role="header" data-position="fixed">
+
+                <a href="#calc" class="btn-header-left">
+                    <span class="arrow-back"></span>
+                </a>
+
+                <h1><span class="logo-app-mini"></span></h1>
+            </header>
+
+            <div role="main" class="ui-content">
+                <ul class="list-beer" id="list-result" >
+                </ul>
+
+                <a href="#calc" class="breja-btn btn-red">Calcular novamente</a>
+            </div>
+        </section>
+
+
+
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+
+    </body>
+</html>
