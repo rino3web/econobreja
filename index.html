@@ -1,109 +1,316 @@
-<!-- EconoBreja | RINO3 (http://rino3.com.br) | Copyright 2014 sob a licença MIT -->
+<!-- EconoBebe | RINO3 (http://rino3.com.br) | Copyright 2014 sob a licença MIT -->
 <!DOCTYPE html>
-<html class="no-js" lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>EconoBreja - Beba mais pagando menos</title>
-        <meta name="Description" content="Aplicativo para economizar na hora de comprar cerveja. Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar e o EconoBreja vai te dizer qual a melhor opção." />
-        <meta name="robots" content="index,follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/screen.css">
-    </head>
-    <body>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<title>EconoBebe - Beba mais pagando menos</title>
+                <meta name="description" content="Aplicativo para economizar na hora de comprar bebida. Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar e o EconoBebe vai te dizer qual a melhor opção." />
+                <meta name="robots" content="index,follow" />
+		<!-- Building blocks -->
+		<link rel="stylesheet" href="style/action_menu.css">
+		<link rel="stylesheet" href="style/buttons.css">
+		<link rel="stylesheet" href="style/confirm.css">
+		<link rel="stylesheet" href="style/edit_mode.css">
+		<link rel="stylesheet" href="style/headers.css">
+		<link rel="stylesheet" href="style/input_areas.css">
+		<link rel="stylesheet" href="style/status.css">
+		<link rel="stylesheet" href="style/switches.css">
+		<link rel="stylesheet" href="style/drawer.css">
+		<link rel="stylesheet" href="style/lists.css">
+		<link rel="stylesheet" href="style/progress_activity.css">
+		<link rel="stylesheet" href="style/scrolling.css">
+		<link rel="stylesheet" href="style/seekbars.css">
+		<link rel="stylesheet" href="style/tabs.css">
+		<link rel="stylesheet" href="style/toolbars.css">
 
-        <!-- First Page -->
-        <section data-role="page" id="intro" class="ui-breja breja-bg">
-            <div role="main" class="ui-content">
+                <!-- Transitions -->
+		<link rel="stylesheet" href="transitions.css">
 
-                <span class="logo-app"></span>
+		<!-- Util CSS: some extra tricks -->
+		<link rel="stylesheet" href="util.css">
 
-                <div class="content-info">
-                    <p class="intro-info">Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar, e o EconoBreja vai te dizer qual a melhor opção.</p>
-                </div>
+		<!-- Additional markup of author -->
+		<link rel="stylesheet" href="main.css">
 
-                <a href="#calc" class="breja-btn btn-red">Iniciar</a>
-            </div>
+		<!-- Additional markup to make Building Blocks kind of cross browser -->
+		<!--link rel="stylesheet" href="cross_browser.css"-->
 
-        </section>
+		<style>
+		    #index {
+		      height: 100%;
+		    }
+		    [data-position="right"] {
+		      position: absolute;
+		      top: 0;
+		      left: 0;
+		      right: 0;
+		      bottom: 0;
+		      transform: translateX(100%);
+		      -webkit-transform: translateX(100%);
+		      z-index: 15;
+		      z-index: 100; /* -> drawer */
+		    }
+		    section[role="region"][data-position="right"] {
+		      position: absolute;
+		    }
+		    [data-position="right"].current {
+		      animation: rightToCurrent 0.4s forwards;
+		      -webkit-animation: rightToCurrent 0.4s forwards;
+		    }
+		    [data-position="right"].right {
+		      animation: currentToRight 0.4s forwards;
+		      -webkit-animation: currentToRight 0.4s forwards;
+		    }
+		    [data-position="current"].left {
+		      animation: currentToLeft 0.4s forwards;
+		      -webkit-animation: currentToLeft 0.4s forwards;
+		    }
+		    [data-position="current"].current {
+		      animation: leftToCurrent 0.4s forwards;
+		      -webkit-animation: leftToCurrent 0.4s forwards;
+		    }
+		    [data-position="back"] {
+		      position: absolute;
+		      top: 0;
+		      left: 0;
+		      right: 0;
+		      bottom: 0;
+		      z-index: -1;
+		      opacity: 0;
+		      /* z-index: 100; -> drawer */
+		    }
+		    [data-position="back"].fade-in {
+		      z-index: 120;
+		      animation: fadeIn 0.2s forwards;
+		      -webkit-animation: fadeIn 0.2s forwards;
+		    }
+		    [data-position="back"].fade-out {
+		      animation: fadeOut 0.2s forwards;
+		      -webkit-animation: fadeOut 0.2s forwards;
+		    }
+
+		    [data-position="edit-mode"] {
+		      position: absolute;
+		      top: -5rem;
+		      left: 0;
+		      right: 0;
+		      bottom: -7rem;
+		      z-index: -1;
+		      opacity: 0;
+		      transition: all 0.3s ease;
+		    }
+		    [data-position="edit-mode"].edit {
+		      position: absolute;
+		      top: 0;
+		      left: 0;
+		      right: 0;
+		      bottom: 0;
+		      z-index: 120;
+		      opacity: 1;
+		    }
+
+		    /* Headers */
+		    #headers section[role="region"] {
+		      margin-bottom: 1.5rem;
+		    }
+		    #headers section[role="region"]:not(#drawer) {
+		      display: inline;
+		    }
+		    #headers article header:first-child {
+		      margin-top: 1.5rem;
+		    }
+		    #headers section[role="region"] header h2 {
+		      margin: 0 0 1.5rem 0;
+		    }
+
+		    /* Lists */
+		    /* to avoid double background effect on press */
+		    [data-type=list] li>a:active {
+		      background-color: transparent;
+		    }
+
+		    /* Drawer */
+		    section[role="region"]:not(#drawer) {
+		      transition: none;
+		      left: 0;
+		      z-index: 0;
+		      padding-left: 0;
+		    }
+		    section[data-type="sidebar"] + section[role="region"] > header:first-child > button,
+		    section[data-type="sidebar"] + section[role="region"] > header:first-child > a {
+		      background-position: 3.5rem center;
+		    }
+
+		    /* Switches */
+		    #switches label:last-child {
+		      margin-left: 2rem;
+		    }
+
+		    /* Scrolling */
+		    nav[data-type="scrollbar"] {
+		      padding-top: 1rem;
+		    }
+		    nav[data-type="scrollbar"] p {
+		      opacity: 1;
+		    }
+
+		    /* Seek bars */
+		    div[role="slider"] > label.icon {
+		      background: no-repeat right top;
+		      background-size: 3rem auto;
+		    }
+
+		    /* Tabs */
+		    #tabs .content {
+		      padding: 0;
+		    }
+		    #tabs .content .content {
+		      padding: 1.5rem 3rem;
+		    }
+		    #panel1 a {
+		      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAABaCAYAAACv+ebYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDM0IyRDEwMTRCQ0ExMUUzOEI3MkZFOEM1MTY1MUU0NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDM0IyRDEwMjRCQ0ExMUUzOEI3MkZFOEM1MTY1MUU0NSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkMzQjJEMEZGNEJDQTExRTM4QjcyRkU4QzUxNjUxRTQ1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkMzQjJEMTAwNEJDQTExRTM4QjcyRkU4QzUxNjUxRTQ1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+RALCTwAAAgdJREFUeNrsmLFKA0EQhnNeULhOwSIQrAQFraI2FkKsBLGSdIakClj4BNa+gQhWSayUlBYWKQSLYEBtYsRCEAKKYKGgiKQ5Z2ACR7jd7N5NFGQGfoJzs/vlbjdz6+/4vp/4ixhJ/FEIWMACZotkWNJxHO2gQqHgwcc0/fkA+tLVVyoVMzBMrJpjHLSHJSCPcgitgnZBb7HuWBGToAvQbF8ev8A2KAtaAb1yr/F+CDQYeO2Ae3OlQTmDuk2qZQMv454zqHOolg3sWSyJxwluWYBbnOAbUNugrk21bGA8ppRAXU1Nl2p87p9TA7QG6oRc69C1xjAaCMY5aAa0AZqn3C3oFPQdu1cPCATUSEN9OyVp7XC35jV1W3T3JZMbGgSeAjVBh/Roywo4QvEVNEe1TRobCYyt7xKUCeTcEHieoG4gl6Gx6ShrfARKheR78F6U+6C9SNEcqzbgRXrNqSIIdzV1WZrryvRRLxlsOncAVDuXCjzGeLwatQF/MII/bcBPjOBnG/AdI/jeBoxN/4UBinM82jaQOgO4HqVzHTOAT6J0rjPQREzwu/JUKB6IgAUsYAELWMAC/vUIPfoUi0XtoOr6jpWJ6ucWzI4+Tu1aNUckEzUMLCaqzh0QEzVWrZioyh6QEBNVTFQxUcVENXzUYqLGCTFRtWAxUaOGmKjyb6qABfyPwD8CDADIZJaymr3BjwAAAABJRU5ErkJggg==);
+		    }
+		    #panel2 a {
+		      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAABaCAYAAACv+ebYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo5NjZEOTM1MTRCQ0UxMUUzOEI3MkZFOEM1MTY1MUU0NSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo5NjZEOTM1MjRCQ0UxMUUzOEI3MkZFOEM1MTY1MUU0NSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjlEMUREOTkyNEJDQjExRTM4QjcyRkU4QzUxNjUxRTQ1IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjk2NkQ5MzUwNEJDRTExRTM4QjcyRkU4QzUxNjUxRTQ1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+XJ6+IQAAA0pJREFUeNrsmF1IVEEUx+fqwmoRRS9FREUf9lSs9lBERNSjRBB9PAQtGZWla+ZDH/QQ9VAQ9GVqIaH1YFRgRAW99BAUBVFa9BBREhm9FIVGUQm5/Q+eibvj3L0zd3e1jznwY53r7Px35p6Ze+7fS6fTYjSiSIxSOGEn7IT/fuGY53k5DZBMJuP42AjOAeNjMIYv0mcpOAJ2gwFL7RLQCirADlNxudQnwU7QBqIuQTVoMf1+DCwFW7i9AbwF+wL6HwArlWvFivggqDERPqH8yr2gF5zR9C8HC0LGpOU+Ct6ECc/WXD8NPoMO5Xo3mKqZccLXbgwTlcK3wWrNYG08wD3f9YOMP8aDPv67CdSbJldHwP8ou99ZJFczqLPJ6psBAofAa4MxvoMqkFJEPU7aeJDwACeDGg8MZ/oDtGtEW3h/l2Tbx62a2ZVH3M9StDosueRypXjZZdTxfRu0FG5WRO+An0qfG8WJxO+d8BLMAfO5PRF8BA8tRKdpknUymKLQrz6dapU9SOf3XAvhXt7H/ngCHit0x5ROfbyn74IxYCwv/2LwwVC8nnOnltvLaIYmz+MusNmXpXSy3QKTDIXTnB9NUQqBS/y0kkHn831QZilexYlrVYHQeb3f154JHoFtmu9RUi3UiLfzPrcufQ4rx+A4cBY853u4iO/pM942a4wrEIM+NPP3/OtL+VoZX1fjMmgAp/JV7NGAS3i7hI1H1cyxsErEpsrs4sPlokHfBk7QeL7K234uj1aBnpC+68DxfNfV18E8sCvLM/s82FOIgv4b389ZnM1XwSfwFCwHm8CXXLLa5HncyRTx1gutQjzngThhJ+yEnbATdsJO+P8R9tjLjBwXKlORTFRPXKH3sJxMVOlz0TuVM1GzLjV5EhXKdVoynYl6jV9fwmKG+FNNVJpxpxhuogpOshUi00TNllyCfQ8jP9OZqP74N01UeXJRVIpME/WVGLITbU1UEt3ua5OlONxEFWu3ysaImqj+GVNM4F84ndtfxZCr98JCvJETLeuMVWHBp5g0UeWS25ioHh9ANb7JjJiJmhLORLUsfQpmouqSSxfrRaaJGhS0552Jmpfy1pmokU1U06y2eTNxJqoTdsJOuLDxS4ABAHTFDfqZk4Q5AAAAAElFTkSuQmCC);
+		    }
+		    #panel3 a {
+		      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAABQCAYAAAAOYsW+AAAA30lEQVRo3u2YMQrCQBBFv95ICXqTtDmJKfQk01olED2DiugF1MImjXqBWNisEIZVFIKFvFftzmdnt3kwrAQAAB/S84Usy0aS1q68N7NhyKeSJi6fmVke8p2kgcvHZrZpF/qRx1witesX+e2TnrGLz5IaVzu9WD85ttYHlzWh5/uLzewuqXQHF639SlLd2teh9mTpHl6GnoDHePxbjwt3sPrC48o9vMBjPMZjPAYAAACAjuZqzbfRuVppMgx5dK5WmuQhj87VShPmakeadP7PFXoCHuMxHgMe4zEeA8C/8ABPaein4jLEkQAAAABJRU5ErkJggg==);
+		    }
+
+		    /* Filters */
+		    [role="tablist"][data-type="filter"] {
+		      margin-bottom: 2rem;
+		    }
+
+		    /* Device rotation */
+		    .landscape section[role="region"]#drawer > header:first-child {
+		      /* Whatever needs to be changed on landscape */
+		    }
+		</style>
+	</head>
+	<body>
+	  	<section id="index" data-position="current">
+	    	<section id="drawer" role="region">
+	      		<header class="fixed">
+	        		<menu type="toolbar">
+			      		<a href="#" id="btn-add"><span class="icon icon-add">add</span></a>
+			    	</menu>
+
+	        		<h1>Bebidas</h1>
+	      		</header>
+
+	      		<article class="content scrollable header bottom">
+			        <div data-type="list">
+			          	<ul id="lista-bebida">
+			          	</ul>
+			        </div>
+	      		</article>
+
+	      		<div role="action-bottom">
+	      			<button id="btn-calc">Calcular</button>
+			  	</div>
+	    	</section>
+	 	</section>
 
 
-        <!-- Second Page -->
-        <section data-role="page" id="calc">
-            <header data-role="header" data-position="fixed">
+	  	<!--··························· Resultado ···························-->
+	  	<section role="region" id="result" data-position="right">
+	    	<header class="fixed">
+	      		<a id="btn-calc-back" href="#"><span class="icon icon-back">back</span></a>
+	      		<h1>Preço por Litro:</h1>
+	    	</header>
 
-                <a href="#intro" class="btn-header-left">
-                    <span class="arrow-back"></span>
-                </a>
-
-                <h1><span class="logo-app-mini"></span></h1>
-            </header>
-
-            <div role="main" class="ui-content">
-                <div class="row-form-price ui-field-contain">
-                    <label for="b1">Geladinha <small>269 ml</small></label>
-                    <input id="b1" data-name="Geladinha" data-behaviour="money" data-ml="269" value="0,00" data-mini="true" type="number" maxlength="6">
-                </div>
-
-                <div class="row-form-price ui-field-contain">
-                    <label for="b2">Lata <small>350 ml</small></label>
-                    <input  data-name="Lata" data-behaviour="money" id="b2" data-ml="350" value="0,00" data-mini="true" type="number" maxlength="6" >
-                </div>
-
-                <div class="row-form-price ui-field-contain">
-                    <label for="b3">long neck <small>355 ml</small></label>
-                    <input  id="b3" data-name="long neck" data-behaviour="money" data-ml="355" value="0,00" data-mini="true" type="number" maxlength="6" >
-                </div>
-
-                <div class="row-form-price ui-field-contain">
-                    <label for="b4">Latão <small>473 ml</small></label>
-                    <input  data-name="Latão" data-behaviour="money" id="b4" data-ml="473" value="0,00" data-mini="true" type="number" maxlength="6" >
-                </div>
-
-                <div class="row-form-price ui-field-contain">
-                    <label for="b5">Garrafa <small>600 ml</small></label>
-                    <input  data-name="Garrafa" data-behaviour="money" data-ml="600" id="b5" value="0,00" data-mini="true" type="number" maxlength="6" >
-                </div>
-
-                <div class="row-form-price ui-field-contain">
-                    <label for="b6">Litrão <small>1000 ml</small></label>
-                    <input data-name="Litrão" data-behaviour="money" data-ml="1000" id="b6" value="0,00" data-mini="true" type="number" >
-                </div>
-            </div>
-
-            <footer data-role="footer" data-position="fixed">
-                <a id="bt-calc" href="#calc" class="breja-btn-big btn-yellow inactive">Calcular</a>
-            </footer>
-
-        </section>
+	    	<article class="content scrollable header bottom">
+			        <div data-type="list">
+			          	<ul id="lista-resultado">
+			          	</ul>
+			        </div>
+	      		</article>
+	  	</section>
 
 
+		<!--·························· Edit menu ··························-->
+		<section id="confirm" data-position="back" class="fullscreen">
+		  	<form role="dialog" data-type="confirm">
+		    	<section>
+		      		<h1>Editar</h1>
+		      		<p>
+                                    <input id="key-bebida" type="hidden" >
+		      		    <input id="nome-bebida" type="text" placeholder="Nome da bebida" >
+                                    <br />
+		      		    <input id="ml-bebida" type="number" placeholder="Quantidade em ml" >
+		      		</p>
+		    	</section>
 
-        <!-- Third Page -->
-        <section data-role="page" id="result" class="ui-breja breja-bg">
-            <header data-role="header" data-position="fixed">
+		    	<menu>
+                                <button id="bt-cancel">Cancelar</button>
+                                <button id="bt-salvar" class="recommend">Salvar</button>
+                                <button id="bt-excluir" class="danger">Excluir</button>                                
+		    	</menu>
+		  	</form>
+		</section>
+                <!--·························· Add menu ··························-->
+		<section id="add" data-position="back" class="fullscreen">
+		  	<form role="dialog" data-type="confirm">
+		    	<section>
+		      		<h1>Adicionar</h1>
+		      		<p>
+                                    <input id="addnome-bebida" type="text" placeholder="Nome da bebida" >
+                                    <br />
+		      		    <input id="addml-bebida" type="number" placeholder="Quantidade em ml" >
+		      		</p>
+		    	</section>
 
-                <a href="#calc" class="btn-header-left">
-                    <span class="arrow-back"></span>
-                </a>
+		    	<menu>
+                                <button id="addbt-cancel">Cancelar</button>
+                                <button id="addbt-salvar" class="recommend">Salvar</button>
+		    	</menu>
+		  	</form>
+		</section>
+              
+                <!--mozilla -->
+	  	<script type="text/javascript" defer src="js/status.js"></script>
+	  	<script type="text/javascript" defer src="js/seekbars.js"></script>
+                <!--storage -->
+                <script type="text/javascript" defer src="js/json2.js"></script>
+                <script type="text/javascript" defer src="js/jquery.min.js"></script>
+                <script type="text/javascript" defer src="js/jstorage.js"></script>
+                <!--app-->
+	  	<script type="text/javascript" defer src="js/app.js"></script>
 
-                <h1><span class="logo-app-mini"></span></h1>
-            </header>
+	  	<script>
+            
 
-            <div role="main" class="ui-content">
-                <ul class="list-beer" id="list-result" >
-                </ul>
+		    /*var mobile = (navigator.userAgent.search("Mobile") != -1);
+		    if ( mobile ) {
+		      //Let's reduce font-size when in landscape
+		      //fs: current font-size
+		      var fs = parseInt(window.getComputedStyle(document.documentElement).getPropertyValue( 'font-size' ), 10);
+		      var mql = window.matchMedia("(orientation: portrait)");
 
-                <a href="#calc" class="breja-btn btn-red">Calcular novamente</a>
-            </div>
-        </section>
+		      if(mql.matches) { //portrait
+		        document.documentElement.style.fontSize = fs + 'px';
+		        document.body.classList.remove('landscape');
+		      } else { // landscape
+		        document.documentElement.style.fontSize = fs * 0.7 + 'px';
+		        document.body.classList.add('landscape');
+		      }
 
-
-
-
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile-1.4.0.min.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-
-    </body>
+		      mql.addListener(function(m) {
+		        if(m.matches) { //portrait
+		          document.documentElement.style.fontSize = fs + 'px';
+		          document.body.classList.remove('landscape');
+		        }
+		        else { //landscape
+		          document.documentElement.style.fontSize = fs * 0.7 + 'px';
+		          document.body.classList.add('landscape');
+		        }
+		      });
+		    }*/
+	  	</script>
+	</body>
 </html>
+
+
+

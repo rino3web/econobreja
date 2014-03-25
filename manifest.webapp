@@ -1,16 +1,20 @@
 {
     "version":"1.0",
-	"name": "EconoBreja",
-    "description": "Aplicativo para economizar na hora de comprar cerveja. Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar e o EconoBreja vai te dizer qual a melhor opção.",
+    "name": "EconoBebe",
+    "description": "Aplicativo para economizar na hora de comprar bebida. Você já ficou em dúvida se compensa comprar uma lata ou garrafa? Informe o preço dos recipientes que quiser comparar e o EconoBebe vai te dizer qual a melhor opção.",
     "launch_path": "/index.html",
+    "default_locale": "pt-BR",
     "icons": {
+        "128": "/images/icon-128.png",
+        "60": "/images/icon-60.png",
+        "120": "/images/icon-120.png",
+        "90": "/images/icon-120.png",
         "32": "/images/icon-32.png",
-        "64": "/images/icon-64.png",
-        "128": "/images/icon-128.png"
+        "256": "/images/icon-256.png"
     },
 	"developer": {
         "name": "RINO3",
-        "url": "http://rino3.com.br"
+        "url": "http://rino3.com.br/econobebe"
     }
     
 }
